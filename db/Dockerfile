@@ -1,5 +1,7 @@
-FROM mysql:5.7
+FROM mysql
 
-ENV MYSQL_DATABASE roytuts
  
-copy database.sql /docker-entrypoint-initdb.d/
+COPY ./sql-scripts/ /docker-entrypoint-initdb.d/
+
+#CMD [ "/etc/init.d/mysqld", "start"]
+#CMD [ "sleep 1000" ]

@@ -9,10 +9,13 @@ services:
       - db
 
   db:
-    image: mysql:5.7
+    restart: always
+    build: db/
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
-  #  volumes:
-   #   - ./db:/docker-entrypoint-initdb.d/:ro
+      MYSQL_DATABASE: roytuts
+      MYSQL_USER: root 
+    volumes: 
+      - ./db/data/:/var/lib/mysql:rw
