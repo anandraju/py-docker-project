@@ -1,21 +1,31 @@
-version: "3"
+version: "3.6"
 services:
   app:
     restart: always
     build: .
     ports:
       - "5000:5000"
+    networks:
+      - my-network
     depends_on: 
       - db
+    volumes:
+    - ./user_crud/:/user_crud:rw  
 
   db:
     restart: always
     build: db/
+    networks: 
+      - my-network
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: roytuts
-      MYSQL_USER: root 
+      MYSQL_USER: dbuser
+      MYSQL_PASSWORDR: password 
     volumes: 
       - ./db/data/:/var/lib/mysql:rw
+
+networks:
+  my-network: {}
