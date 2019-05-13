@@ -1,4 +1,4 @@
-FROM mysql
+FROM mysql:updatedb
 
  
 COPY ./sql-scripts/ /docker-entrypoint-initdb.d/
