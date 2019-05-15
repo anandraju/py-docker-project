@@ -1,21 +1,22 @@
 version: "3.6"
 services:
   app:
+    container_name: myapp
     restart: always
     build: .
     ports:
       - "5000:5000"
     networks:
       - my-network
-    depends_on: 
+    depends_on:
       - db
     volumes:
-    - ./user_crud/:/user_crud:rw  
-
+    - ./user_crud/:/user_crud:rw
   db:
+    container_name: mydb
     restart: always
     build: db/
-    networks: 
+    networks:
       - my-network
     ports:
       - "3306:3306"
@@ -23,9 +24,16 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: roytuts
       MYSQL_USER: dbuser
-      MYSQL_PASSWORDR: password 
-    volumes: 
+      MYSQL_PASSWORDR: password
+    volumes:
       - ./db/data/:/var/lib/mysql:rw
-
 networks:
-  my-network: {}
+  my-network: 
+    ipam:
+      driver: default
+      config: 
+        - subnet: 172.19.0.0/16
+
+volumes:
+  data:
+  user_crud:      
